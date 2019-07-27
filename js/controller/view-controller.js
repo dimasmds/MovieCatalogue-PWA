@@ -1,4 +1,4 @@
-function showNowPlayingMovie(data) {
+const showNowPlayingMovie = data => {
     let content = "";
     data.forEach(function (movie) {
         content += `
@@ -18,9 +18,9 @@ function showNowPlayingMovie(data) {
     });
     let nowPlayingContainer = document.getElementById("now-playing-container");
     nowPlayingContainer.innerHTML = content
-}
+};
 
-function showUpcomingMovies(data) {
+const showUpcomingMovies = data => {
     let content = "";
     data.forEach(function (movie) {
         content += `
@@ -40,7 +40,7 @@ function showUpcomingMovies(data) {
     });
     let nowPlayingContainer = document.getElementById("upcoming-container");
     nowPlayingContainer.innerHTML = content;
-}
+};
 
 const showDetailMovie = data => {
     console.log(data);
