@@ -1,0 +1,27 @@
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 16px;
+  /* fallback */
+  max-height: 32px;
+  /* fallback */
+  -webkit-line-clamp: 2;
+  /* number of lines to show */
+  -webkit-box-orient: vertical; }
+
+.card {
+  border-radius: 20px; }
+  .card .card-rating {
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 24px; }
+    .card .card-rating .rating {
+      font-weight: bold; }
+
+.preloader-wrapper {
+  margin: 30px; }
