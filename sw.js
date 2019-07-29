@@ -19,9 +19,10 @@ let filesToCache = [
     "/images/icons/icon-192x192.png",
     "/images/icons/icon-384x384.png",
     "/images/icons/icon-512x512.png",
-    "/js/controller/api-controller.js",
     "/js/lib/materialize.min.js",
     "/js/lib/idb.js",
+    "/js/controller/api-controller.js",
+    "/js/controller/view-controller.js",
     "/js/controller/nav-controller.js",
     "/js/controller/sw-controller.js",
     "/js/controller/db-controller.js"

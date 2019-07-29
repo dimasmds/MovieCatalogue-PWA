@@ -7,6 +7,8 @@ const endpointNowPlaying = `${BASE_URL}movie/now_playing?api_key=${API_KEY}&lang
 const endpointUpcoming = `${BASE_URL}movie/upcoming?api_key=${API_KEY}&language=${DEFAULT_LANGUAGE}&page=1`;
 const endpointDetailMovie = `${BASE_URL}movie/`;
 
+const logTAG = `[api-controller]`;
+
 const loading = `
         <div class="center-align">
             <div class="preloader-wrapper small active">
@@ -51,7 +53,14 @@ const getNowPlayingMovies = () => {
                 dbSaveNowPlayingMovie(movie)
             });
             dbGetNowPlayingMovie().then(showNowPlayingMovie)
+        }).catch(() => {
+        isUpcomingCached().then(status => {
+            if (status) {
+                dbGetNowPlayingMovie().then(showNowPlayingMovie);
+                console.log(`${logTAG} load from localDB`)
+            }
         })
+    })
 };
 
 const getUpcomingMovies = () => {
@@ -64,7 +73,14 @@ const getUpcomingMovies = () => {
                 dbSaveUpcomingMovie(movie);
             });
             dbGetUpcomingMovie().then(showUpcomingMovies)
+        }).catch(() => {
+        isUpcomingCached().then(status => {
+            if (status) {
+                dbGetUpcomingMovie().then(showUpcomingMovies);
+                console.log(`${logTAG} load from localDB`)
+            }
         })
+    })
 };
 
 const getDetailMovies = idMovie => {
@@ -72,7 +88,7 @@ const getDetailMovies = idMovie => {
         .then(data => {
             dbSaveDetailMovie(data)
                 .then(status => {
-                    if(status) {
+                    if (status) {
                         showDetailMovie(data)
                     } else {
                         console.log("Error get save data")
