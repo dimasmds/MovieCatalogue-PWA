@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "7"
+  - "v11.3.0"
 script:
  - echo "Deploy!!"
 install:
