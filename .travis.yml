@@ -6,4 +6,4 @@ script:
 install:
   - npm install -g firebase-tools
 after_success:
-  - firebase deploy --project movie-catalogue-pwa --token $FIREBASE_TOKEN
+  - firebase deploy --project movie-catalogue-pwa --token $FIREBASE_TOKE
