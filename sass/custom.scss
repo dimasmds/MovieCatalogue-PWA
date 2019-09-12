@@ -26,6 +26,39 @@
   }
 }
 
+.card-image {
+  img {
+    max-height: 300px;
+    background-position: center center;
+    object-fit: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+.card-content {
+  .image-poster {
+    border-radius: 2%;
+    max-width: 200px;
+    margin-right: 20px;
+  }
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
 .preloader-wrapper {
   margin: 30px;
+}
+
+@media only screen and (max-width: 500px){
+  .flex-row {
+    flex-direction: column;
+  }
 }

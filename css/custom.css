@@ -23,5 +23,42 @@
     .card .card-rating .rating {
       font-weight: bold; }
 
+.card-image img {
+  max-height: 300px;
+  background-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  background-repeat: no-repeat; }
+
+.card-content .image-poster {
+  border-radius: 2%;
+  max-width: 200px;
+  margin-right: 20px; }
+
+.flex-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row; }
+
+.flex-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
 .preloader-wrapper {
   margin: 30px; }
+
+@media only screen and (max-width: 500px) {
+  .flex-row {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column; } }

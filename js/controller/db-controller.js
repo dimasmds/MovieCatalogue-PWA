@@ -114,7 +114,7 @@ const isNowPlayingCache = () => {
             const transaction = db.transaction("now-playing", `readonly`);
             return transaction.objectStore("now-playing").getAll()
         }).then(data => {
-            if(data.length > 0) {
+            if (data.length > 0) {
                 resolve(true);
             } else {
                 resolve(false);
@@ -129,7 +129,7 @@ const isUpcomingCached = () => {
             const transaction = db.transaction("upcoming", `readonly`);
             return transaction.objectStore("upcoming").getAll();
         }).then(data => {
-            if(data.length > 0) {
+            if (data.length > 0) {
                 resolve(true)
             } else {
                 resolve(false)

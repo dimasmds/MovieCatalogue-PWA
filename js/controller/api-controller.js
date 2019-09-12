@@ -84,13 +84,17 @@ const getUpcomingMovies = () => {
 };
 
 const getDetailMovies = idMovie => {
+    let container = document.getElementById("movie-container");
+    container.innerHTML = loading;
     fetchApi(`${endpointDetailMovie}${idMovie}?api_key=${API_KEY}`)
         .then(data => {
+            container.innerHTML = "";
             dbSaveDetailMovie(data)
                 .then(status => {
                     if (status) {
                         showDetailMovie(data)
                     } else {
+                        container.innerHTML = "<p>Ups Failed to load Data</p>";
                         console.log("Error get save data")
                     }
                 })
