@@ -1,4 +1,4 @@
-const applicationServerPublicKey = 'BAjJj2S6Jpw-gpZhfEf9erRYr2WLhm7pFM7pXlmMyXNoFEicTuL3AmTTXpKFXULIcJ0RFEiCO9rhjEqRAco0Rqc';
+const applicationServerPublicKey = 'BEfNGSGU3ARkp2yb2aNCoKchlnA9zjLtcA4p2kMIwAUC1kVxZ6QORpd_Zb2jQkQCnZbrHuxHpcebyh-PsakrvMc';
 let isSubscribed = null;
 
 const updateButton = () => {
@@ -18,6 +18,7 @@ const subscribeUser = () => {
         applicationServerKey: applicationServerKey
     }).then(subscription => {
         console.log('User is subscribed', subscription);
+        endpointText.textContent = JSON.stringify(subscription);
         isSubscribed = true;
         updateButton()
     }).catch(error => {
@@ -42,6 +43,7 @@ const unsubscribeUser = () => {
 
 const initializeUI = () => {
     pushButton = document.getElementById('buttonNotification');
+    endpointText = document.getElementById('endpointText');
 
     pushButton.addEventListener('click', () => {
         pushButton.disabled = true;
