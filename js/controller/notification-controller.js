@@ -10,7 +10,6 @@ const updateButton = () => {
     pushButton.disabled = false
 };
 
-
 const subscribeUser = () => {
     const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
     swRegistration.pushManager.subscribe({
@@ -29,7 +28,7 @@ const subscribeUser = () => {
 
 const unsubscribeUser = () => {
     swRegistration.pushManager.getSubscription().then(subscription => {
-        if(subscription) {
+        if (subscription) {
             return subscription.unsubscribe()
         }
     }).catch(error => {
@@ -39,7 +38,26 @@ const unsubscribeUser = () => {
         isSubscribed = false;
         updateButton()
     })
-}
+};
+
+const requestPermission = () => {
+    if ("Notification" in window) {
+        Notification.requestPermission().then(function (result) {
+            if (result === "denied") {
+                console.log(`[Notification] Fitur notifikasi tidak diijinkan`)
+            } else if (result === "default") {
+                console.log(`[Notification] Pengguna menutup permission`)
+            } else {
+                console.log(`[Notification] Diijinkan`)
+                subscribeUser();
+            }
+        })
+    } else {
+        console.log(`[Notification] Browser ini tidak mendukung notifikasi`);
+    }
+};
+
+
 
 const initializeUI = () => {
     pushButton = document.getElementById('buttonNotification');
@@ -47,10 +65,10 @@ const initializeUI = () => {
 
     pushButton.addEventListener('click', () => {
         pushButton.disabled = true;
-        if(isSubscribed) {
+        if (isSubscribed) {
             unsubscribeUser()
         } else {
-            subscribeUser();
+            requestPermission();
         }
     });
 
