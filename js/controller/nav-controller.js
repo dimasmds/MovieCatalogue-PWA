@@ -30,6 +30,8 @@ const loadPage = page => {
                     getNowPlayingMovies()
                 } else if (page === "upcoming") {
                     getUpcomingMovies()
+                } else if (page === "setting") {
+                    initializeUI()
                 }
             } else if (this.status === 404) {
                 content.innerHTML = "<p>Halaman tidak ditemukan.</p>";

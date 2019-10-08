@@ -10,7 +10,6 @@ let filesToCache = [
     "/pages/now-playing.html",
     "/pages/favorites.html",
     "/pages/upcoming.html",
-    "/images/sample-1.jpg",
     "/images/icons/icon-72x72.png",
     "/images/icons/icon-96x96.png",
     "/images/icons/icon-128x128.png",
@@ -25,7 +24,8 @@ let filesToCache = [
     "/js/controller/view-controller.js",
     "/js/controller/nav-controller.js",
     "/js/controller/sw-controller.js",
-    "/js/controller/db-controller.js"
+    "/js/controller/db-controller.js",
+    "/js/controller/notification-controller.js"
 ];
 
 self.addEventListener('install', event => {
@@ -63,4 +63,17 @@ self.addEventListener('fetch', event => {
                 return fetch(event.request)
             })
     )
+});
+
+self.addEventListener('push', event => {
+    console.log('[Service Worker] Push Received');
+    console.log(`[Service Worker] Push with data ${event.data.text()}`);
+
+    const title = "Testing push";
+    const options = {
+        body: event.data.text(),
+        icon: "images/icon-192x192.png",
+        badge: "images/icon-72x72.png"
+    };
+    event.waitUntil(self.registration.showNotification(title, options))
 });
