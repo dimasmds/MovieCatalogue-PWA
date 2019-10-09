@@ -54,7 +54,7 @@ const getNowPlayingMovies = () => {
             });
             dbGetNowPlayingMovie().then(showNowPlayingMovie)
         }).catch(() => {
-        isUpcomingCached().then(status => {
+        isNowPlayingCache().then(status => {
             if (status) {
                 dbGetNowPlayingMovie().then(showNowPlayingMovie);
                 console.log(`${logTAG} load from localDB`)
@@ -83,6 +83,12 @@ const getUpcomingMovies = () => {
     })
 };
 
+const checkForFavorite = data => {
+    isMovieFavorited(data.id).then(status => {
+        updateFavoriteButton(status, data)
+    })
+};
+
 const getDetailMovies = idMovie => {
     let container = document.getElementById("movie-container");
     container.innerHTML = loading;
@@ -92,13 +98,49 @@ const getDetailMovies = idMovie => {
             dbSaveDetailMovie(data)
                 .then(status => {
                     if (status) {
-                        showDetailMovie(data)
+                        dbGetDetailMovie(data.id).then(showDetailMovie);
                     } else {
                         container.innerHTML = "<p>Ups Failed to load Data</p>";
                         console.log("Error get save data")
                     }
                 })
         })
+};
+
+const insertFavorite = data => {
+    return new Promise((resovle, reject) => {
+        dbInsertFavorite(data).then(() => {
+            console.log("[Favorite] Transaction complete")
+            resovle()
+        }).catch(message => {
+            console.log("[Favorite] ", message);
+            reject()
+        })
+    })
+};
+
+const removeFavorite = data => {
+    return new Promise((resolve, reject) => {
+        dbDeleteFavorite(data.id).then(() => {
+            console.log("[Favorite] Movie Deleted")
+            resolve();
+        }).catch(message => {
+            console.log("[Favorite] ", message)
+            reject();
+        })
+    })
+};
+
+const getAllFavorites = () => {
+    let container = document.getElementById("favorite-container");
+    container.innerHTML = loading;
+    dbGetAllFavorite().then(data => {
+        container.innerHTML = "";
+        showFavoriteMovie(data)
+    }).catch(message => {
+        console.log(message)
+        container.innerHTML = "<p>Ups Failed to load Data</p>";
+    })
 };
 
 

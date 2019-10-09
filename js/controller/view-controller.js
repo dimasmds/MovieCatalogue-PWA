@@ -45,8 +45,7 @@ const showUpcomingMovies = data => {
 };
 
 const showDetailMovie = data => {
-    let containerContent =
-        `<div class="row">
+    document.getElementById("movie-container").innerHTML = `<div class="row">
         <div class="col s12 m12">
             <div class="card">
                 <div class="card-image">
@@ -81,8 +80,49 @@ const showDetailMovie = data => {
             </div>
         </div>
     </div>`;
-
-    document.getElementById("movie-container").innerHTML = containerContent;
+    checkForFavorite(data);
 
     console.log(data);
+};
+
+const showFavoriteMovie = data => {
+    let content = "";
+    data = data.reverse();
+    data.forEach(function (movie) {
+        content += `
+        <div class="card">
+                <div class="card-image">
+                    <img alt="${movie.title}" src="${BASE_IMAGE_URL + movie.backdrop_path}">
+                    <div class="card-rating">
+                        <span class="rating">⭐ ${movie.vote_average}</span> <span class="vote">(${movie.vote_count} Votes)</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <a href="/detail.html?id=${movie.id}"><span class="card-title">${movie.title}</span></a>
+                    <p class="text-ellipsis">${movie.overview}</p>
+                </div>
+            </div>
+        `
+    });
+    let nowPlayingContainer = document.getElementById("favorite-container");
+    nowPlayingContainer.innerHTML = content;
+}
+
+const updateFavoriteButton = (status, data) => {
+    let buttonFavorite = document.getElementById('favorite-button');
+    if (status) {
+        buttonFavorite.textContent = 'favorite';
+        buttonFavorite.onclick = function () {
+            removeFavorite(data).then(() => {
+                buttonFavorite.textContent = 'favorite_border'
+            });
+        }
+    } else {
+        buttonFavorite.textContent = 'favorite_border';
+        buttonFavorite.onclick = function () {
+            insertFavorite(data).then(() => {
+                buttonFavorite.textContent = 'favorite'
+            });
+        }
+    }
 };

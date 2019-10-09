@@ -13,6 +13,11 @@ const idbPromised = idb.open('movie-catalogue', 1, upgradeDb => {
         let movieDetailObject = upgradeDb.createObjectStore("movie-detail", {keyPath: "id"});
         movieDetailObject.createIndex("by-id", "id", {unique: true})
     }
+
+    if (!upgradeDb.objectStoreNames.contains('movie-favorite')) {
+        let movieFavoriteObject = upgradeDb.createObjectStore("movie-favorite", {keyPath: "id"});
+        movieFavoriteObject.createIndex("by-id", "id", {unique: true})
+    }
 });
 
 const dbSaveUpcomingMovie = data => {
@@ -133,6 +138,69 @@ const isUpcomingCached = () => {
                 resolve(true)
             } else {
                 resolve(false)
+            }
+        })
+    })
+};
+
+const isMovieFavorited = (idMovie) => {
+    return new Promise((resolve) => {
+        idbPromised.then(db => {
+            const transaction = db.transaction("movie-favorite", `readonly`);
+            return transaction.objectStore("movie-favorite").get(idMovie)
+        }).then(data => {
+            if (data !== undefined) {
+                resolve(true)
+            } else {
+                resolve(false)
+            }
+        })
+    });
+};
+
+const dbInsertFavorite = movie => {
+    console.log("[Insert] ", movie);
+    return new Promise((resolve, reject) => {
+        idbPromised.then(db => {
+            const transaction = db.transaction("movie-favorite", `readwrite`);
+            transaction.objectStore("movie-favorite").add(movie);
+            return transaction;
+        }).then(transaction => {
+            if (transaction.complete) {
+                resolve(true)
+            } else {
+                reject(new Error(transaction.onerror))
+            }
+        })
+    })
+};
+
+const dbDeleteFavorite = movieId => {
+    return new Promise((resolve, reject) => {
+        idbPromised.then(db => {
+            const transaction = db.transaction("movie-favorite", `readwrite`);
+            transaction.objectStore("movie-favorite").delete(movieId);
+            return transaction;
+        }).then(transaction => {
+            if (transaction.success) {
+                resolve(true)
+            } else {
+                reject(new Error(transaction.onerror))
+            }
+        })
+    })
+};
+
+const dbGetAllFavorite = () => {
+    return new Promise((resolve, reject) => {
+        idbPromised.then(db => {
+            const transaction = db.transaction("movie-favorite", `readonly`);
+            return transaction.objectStore("movie-favorite").getAll();
+        }).then(data => {
+            if(data !== undefined) {
+                resolve(data)
+            } else {
+                reject(new Error("Favorite not Found"))
             }
         })
     })

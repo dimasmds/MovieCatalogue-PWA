@@ -18,7 +18,7 @@ const loadNav = () => {
     };
     xHttp.open("GET", "nav.html", true);
     xHttp.send();
-}
+};
 const loadPage = page => {
     let xHttp = new XMLHttpRequest();
     xHttp.onreadystatechange = function () {
@@ -32,6 +32,8 @@ const loadPage = page => {
                     getUpcomingMovies()
                 } else if (page === "setting") {
                     initializeUI()
+                } else if(page === "favorites") {
+                    getAllFavorites()
                 }
             } else if (this.status === 404) {
                 content.innerHTML = "<p>Halaman tidak ditemukan.</p>";

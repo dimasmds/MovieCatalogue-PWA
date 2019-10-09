@@ -17,7 +17,7 @@
     <div class="nav-wrapper container">
         <a href="#" class="brand-logo" id="logo-container">Movie Catalogue Lite</a>
         <a href="#" class="sidenav-trigger" data-target="nav-mobile"></a>
-        <a href="#" class="topnav right"><i class="material-icons" id="favorite-button">favorite_border</i></a>
+        <a class="topnav right"><i class="material-icons" id="favorite-button">favorite_border</i></a>
         <ul class="topnav right hide-on-med-and-down"></ul>
     </div>
 </nav>
@@ -35,7 +35,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         // call API here !
         const idMovies = new URLSearchParams(window.location.search).get("id");
-        getDetailMovies(idMovies)
+        getDetailMovies(idMovies);
     })
 </script>
 </body>
